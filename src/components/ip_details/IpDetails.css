@@ -1,0 +1,125 @@
+:root{
+    --colors-very-dark-gray: hsl(0, 0%, 17%);
+    --colors-dark-gray: hsl(0, 0%, 59%);
+  }
+
+.IpDetails{
+    min-height: 160px;
+    width: 80vw;
+    max-width: 1111px;
+    background-color: #fff;
+    position: absolute;
+    left: 50%;
+    bottom: -80px;
+    transform: translateX(-50%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    z-index: 999;
+    box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.25);
+}
+
+.IpDetails__divider{
+    width: 1px;
+    background-color: hsl(0, 0%, 90%);
+    height: 80px;
+    margin: 0 2rem;
+}
+
+.IpDetails__info{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 100px;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.IpDetails__info_heading{
+    font-size: small;
+    color: var(--colors-dark-gray);
+    margin-bottom: .8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.IpDetails__info_detail{
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: var(--colors-very-dark-gray);
+}
+
+@media screen and (max-width: 1180px) {
+    .IpDetails__info_detail{
+        font-size: 1.25rem;
+
+    }
+}
+
+@media screen and (max-width: 976px) {
+    .IpDetails__info_detail{
+        font-size: 1.15rem;
+    }
+    .IpDetails__info_detail{
+        font-size: .9rem;
+    }
+
+    .IpDetails{
+       
+        padding: .3rem;
+ 
+    }
+
+    .IpDetails__divider{
+        width: 1px;
+        background-color: hsl(0, 0%, 90%);
+        height: 80px;
+        margin: 0 1rem;
+    }
+
+    .IpDetails__info{
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        height: 100px;
+        width: 100%;
+        padding: 0 1rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .IpDetails{
+        flex-direction: column;
+        bottom: -150px;
+        height: 260px;
+        padding: 1rem 0;
+        width: calc(80vw + 60px);
+    }
+    .IpDetails__divider{
+        display: none;
+        height: 1px;
+        background-color: hsl(0, 0%, 90%);
+        width: 50%;
+        margin: 0;
+    }
+
+    .IpDetails__info{
+        padding: 0;
+    }
+    
+    .IpDetails__info_heading{
+        font-size: 12px;
+        margin-bottom: .2rem;
+    }
+
+    .IpDetails__info_detail{
+        font-size: 18px;
+        margin-bottom: 1.5rem;
+        max-lines: 2;
+        text-overflow: ellipsis;
+    }
+}

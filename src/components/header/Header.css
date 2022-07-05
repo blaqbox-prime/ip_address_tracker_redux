@@ -7,6 +7,7 @@
     background-size: cover;
     text-align: center;
     padding-top: 2rem;
+    position: relative;
 }
 
 .Header__title{
@@ -21,6 +22,7 @@
 }
 
 .Header__search_input{
+    font-size: 18px;
     width: 80vw;
     max-width: 500px;
     height: 60px;
@@ -48,3 +50,9 @@
 }
 
 
+
+@media screen and (max-width: 768px){
+    .Header{
+        height: 40%;
+    }
+}
