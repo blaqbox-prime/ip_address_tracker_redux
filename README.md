@@ -1,70 +1,117 @@
-# Getting Started with Create React App
+# Frontend Mentor - IP address tracker solution
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a solution to the [IP address tracker challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/ip-address-tracker-I8-0yYAH0). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
 
-### `npm start`
+## Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### The challenge
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Users should be able to:
 
-### `npm test`
+- View the optimal layout for each page depending on their device's screen size
+- See hover states for all interactive elements on the page
+- See their own IP address on the map on the initial page load
+- Search for any IP addresses or domains and see the key information and location
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Screenshot
 
-### `npm run build`
+![](./screenshots/desktop.png)
+![](./screenshots/mobile.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Links
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Solution URL: [Github Repo](https://github.com/blaqbox-prime/ip_address_tracker_redux)
+- Live Site URL: [IP Tracker](https://fem-iptracker.web.app/)
 
-### `npm run eject`
+## My process
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Built with
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Semantic HTML5 markup
+- Flexbox
+- Desktop-first workflow
+- [jest](https://jestjs.io/) - javascript testing library
+- [React testing library](https://github.com/testing-library/react-testing-library) 
+- [React](https://reactjs.org/) - JS library
+- [Redux + React-redux](https://react-redux.js.org/)
+- [IPify](https://www.ipify.org/) - IP Address location API
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### What I learned
 
-## Learn More
+The biggest learning curve here was working with the map. I also tried a little bit of react testing on the Header.jsx component and the IpDetails component. not so extensively tested so I've pushed that lesson to a later project so I can dive much deeper into it and be somewhat able to say 'I can write unit tests in React' 😼
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Any and all criticism for this is welcome. I don't know if this could have been done better so, any pointers will be appreciated. Otherwise, this was my best shot at getting this component to work. :}
 
-### Code Splitting
+```js
+function Map() {
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  const location = useSelector((state) => state);
+  const [map, setMap] = useState(null);
 
-### Analyzing the Bundle Size
+ const mapRef = useCallback((mapContainer) => {
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+    if(mapContainer == null) return;
 
-### Making a Progressive Web App
+    mapContainer.innerHTML = '';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+    
+    const leafmap = new L.map(mapContainer).setView([-26.029744,28.0579063],14);
 
-### Advanced Configuration
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+    }).addTo(leafmap);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+    setMap(leafmap);
 
-### Deployment
+  },[]);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+  useEffect(()=>{
+    if(map !== null){
+      map.setView([location.lat,location.lng]);
+      const marker = L.marker([location.lat,location.lng],{
+        icon: L.icon({iconUrl :'/images/icon-location.svg',iconSize: [46,56]})
+      }).addTo(map)
+    }
+  },[map,location])
 
-### `npm run build` fails to minify
+  return (
+    <main className="MapContainer" ref={mapRef}>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    </main>
+  )
+}
+```
+
+### Continued development
+
+Working with the map was the biggest pain in my bottom and quite frankly, I don't think it had any business being that difficult, I tried looking at videos for react and leaflet, no help was found there. I looked into react-leaflet, the node package that 'abstracts' leaflet. No help there either. Eventually I looked into a project I did before - Google Docs Clone, and that kind of approach was found useful in getting this to work and make some sense to me. I tried to forced in a little Redux for some practice but I think a different project would be better suited for that. So that will be my next objective. React-Redux and Testing with jest & react testing library.
+
+### Useful resources
+
+- [Leaflet docs](https://leafletjs.com/)
+- [Ipify](https://geo.ipify.org/)
+
+
+## Author
+
+- Website - [Personal Site](https://www.karabosambo.co.za)
+- github - [GitHub](https://github.com/blaqbox-prime)
+- Frontend Mentor - [@blaqbox-prime](https://www.frontendmentor.io/profile/blaqbox-prime)
+- Instagram - [@ig_blaqbox.dev](https://www.twitter.com/ig_blaqbox.dev)
